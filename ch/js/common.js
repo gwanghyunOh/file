@@ -60,24 +60,72 @@ var MainAction = {
 		}, Time);
 	},
 	ScrollEvent: function () {
+		var Scrollflg = "N";
 		$(window).on("scroll", function () {
-
 			var height = $(document).scrollTop();
 
-			if (!$(".ScrollTopFix").hasClass("set")) {
-				if (height > 200) {
-					$(".imgWrap").css("opacity", "0");
-					MainAction.SetTime(".ScrollTopFix", "set", "0");
-					MainAction.SetTime(".ScrollTopFix", "on", "100");
+			//style1
+			if($(".ScrollTopFix").hasClass("style1")){
+				if(Scrollflg == "N"){
+					if (height > 200) {
+						$(".imgWrap").css("opacity", "0");
+						MainAction.SetTime(".ScrollTopFix", "set", "0");
+						MainAction.SetTime(".ScrollTopFix", "on", "0");
+
+						setTimeout(function(){
+							Scrollflg = "Y";
+						},300);
+					}
 				}
-			} else {
-				if (height < 200) {
-					MainAction.SetTimeRemove(".ScrollTopFix", "on", "0");
-					MainAction.SetTimeRemove(".ScrollTopFix", "set", "1000");
+
+				if(Scrollflg == "Y"){
+					if (height < 200) {
+						MainAction.SetTimeRemove(".ScrollTopFix", "on", "0");
+						MainAction.SetTimeRemove(".ScrollTopFix", "set", "300");
+
+						setTimeout(function(){
+							Scrollflg = "N";
+						},300);
+					}
+				}
+			}
+			//style2
+			if($(".ScrollTopFix").hasClass("style2")){
+				if(Scrollflg == "N"){
+					if (height > 200) {
+						$(".imgWrap").css("opacity", "0");
+						MainAction.SetTime(".ScrollTopFix", "set", "0");
+						MainAction.SetTime(".ScrollTopFix", "on", "0");
+
+						setTimeout(function(){
+							Scrollflg = "Y";
+						},300);
+					}
+				}
+
+				if(Scrollflg == "Y"){
+					if (height < 200) {
+						MainAction.SetTimeRemove(".ScrollTopFix", "on", "0");
+						MainAction.SetTimeRemove(".ScrollTopFix", "set", "300");
+
+						setTimeout(function(){
+							Scrollflg = "N";
+						},300);
+					}
 				}
 			}
 
 			if ($(".pcIndex .TabList").index() != "-1") {
+				if (!$(".snb").hasClass("on")) {
+					if (height > 166) {
+						$(".snb").addClass("on");
+					}
+				} else {
+					if (height < 166) {
+						$(".snb").removeClass("on");
+					}
+				}
+
 				if (height > $(".pcIndex .TabList").offset().top - ($(window).height() - 200)) {
 					$(".pcIndex .TabList").addClass("on");
 
@@ -114,7 +162,6 @@ var MainAction = {
 						$(".snb").removeClass("on");
 					}
 				}
-				
 			}
 		});
 	}

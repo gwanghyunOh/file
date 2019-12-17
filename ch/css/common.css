@@ -25,7 +25,7 @@ button{margin:0;padding:0;border:none;background:none;cursor:pointer;display:inl
 
 
 .pcIndex{min-width: 1540px}
-.pcIndex #header{width: 100%; min-width: 1540px; height: 166px; position: fixed; padding: 0 65px; box-sizing: border-box; margin: 0 auto; overflow: hidden; transition: all 0.2s; z-index: 1000;}
+.pcIndex #header{width: 100%; min-width: 1540px; height: 166px; position: absolute; padding: 0 65px; box-sizing: border-box; margin: 0 auto; overflow: hidden; transition: all 0.2s; z-index: 1000;}
 .pcIndex.sub #header{position: absolute;}
 .pcIndex.gnb_on #header{height: 482px; background-color: #fff;}
 .pcIndex #header header{width: 100%; position: relative; padding-top: 46px; box-sizing: border-box;}
@@ -79,10 +79,10 @@ button{margin:0;padding:0;border:none;background:none;cursor:pointer;display:inl
 .ScrollTopFix{width: 100%; margin: 0 auto; height: auto; margin-top: -718px; position: relative; opacity: 0; z-index: -1; text-align: center; font-size: 0; background-color: #fff; transition: all 0s;}
 .ScrollTopFix.set{z-index: 1; opacity: 1 !important;}
 .ScrollTopFix div{width: 1560px; height: 718px; background-size: cover; background-position: center center;  margin: 0 auto;}
-.ScrollTopFix div.style1{transition:all 0.2s; transition-timing-function: cubic-bezier(.455,.03,.515,.955); }
-.ScrollTopFix div.style2{transition:all 0.2s; transition-timing-function: cubic-bezier(.455,.03,.515,.955); }
+.ScrollTopFix.style1 div{transition:all 0.2s; transition-timing-function: cubic-bezier(.455,.03,.515,.955); }
+.ScrollTopFix.style2 div{transition:all 0.2s; transition-timing-function: cubic-bezier(.455,.03,.515,.955); }
 .ScrollTopFix.style1.on div{width: 100%;}
-.ScrollTopFix.style2.on div{width: 100%;}
+.ScrollTopFix.style2.on div{width: 100%; height: 1000px;}
 
 @keyframes ScrollTopFix{
   0% {opacity: 0;}
@@ -229,7 +229,10 @@ button{margin:0;padding:0;border:none;background:none;cursor:pointer;display:inl
 .pcIndex .snb.on{top: 0;}
 .pcIndex .snb .sns{position: absolute; left: 65px; top: 20px;}
 .pcIndex .snb .menu{position: absolute; right: 65px; top: 18px;}
-.pcIndex .history{max-width: 1560px; width: 100%; margin: 0 auto; padding-top: 60px;}
+.pcIndex .snb .s1{position: absolute; left: 65px; top: 23px;}
+.pcIndex .snb .s2{margin-top: -10px;}
+.pcIndex .snb .s3{position: absolute; right: 65px; top: 18px;}
+.pcIndex .history{max-width: 1920px; width: 100%; margin: 0 auto; padding-top: 60px;}
 .pcIndex .history h3{text-align: center;}
 .pcIndex .history h3 p{display: block; text-align: center;}
 .pcIndex .history h3 .top{width: 440px; margin: 0 auto; position: relative;}
@@ -237,15 +240,11 @@ button{margin:0;padding:0;border:none;background:none;cursor:pointer;display:inl
 .pcIndex .history h3 .top span::before{content: ""; display: block; width: 138px; top: 40%; height: 1px; background-color: #0a2f58; position: absolute; left: -138px; }
 .pcIndex .history h3 .top span::after{content: ""; display: block; width: 138px; top: 40%; height: 1px; background-color: #0a2f58; position: absolute; right: -138px; }
 .pcIndex .history h3 .sub{margin-top: 24px;}
-.pcIndex .history .Himg{margin-top: -350px; width: calc(100% + 30%); margin-left: 50%; transform: translate(-50%,0);  position: relative; z-index: -1;}
-.pcIndex .history .Himg.on{animation: ImgW 4s cubic-bezier(0.645, 0.045, 0.355, 1.000) both;}
+.pcIndex .history .Himg{margin-top: 100px; width: 1560px; height: 570px; margin-left: 50%; transform: translate(-50%,0);  position: relative; z-index: -1; background-image: url(../img/pc/subimg1.png); background-position: center center; transition:all 0.2s; transition-timing-function: cubic-bezier(.455,.03,.515,.955); }
+.pcIndex .history .Himg.on{width: 100%; }
+/* .pcIndex .history .Himg.on{animation: ImgW 4s cubic-bezier(0.645, 0.045, 0.355, 1.000) both;} */
 .pcIndex .history .Himg img{width: 100%;}
-.pcIndex .history .Hitem{padding: 80px 0 115px 0;}
-
-@keyframes ImgW {
-  0% {width: calc(100% + 30%);  margin-left: 50%; transform: translate(-50%,0); margin-top: -350px;}
-  100% {width: 100%; margin-top: 83px;}
-}
+.pcIndex .history .Hitem{padding: 80px 0 115px 0; text-align: center;}
 
 .mobileIndex{padding-top: 50px;}
 .mobileIndex .Phone{width: 500px; height: 944px; margin: 0 auto; position: relative;background-image: url(../img/mobile/phone.png); background-repeat: no-repeat; z-index: 11;}
