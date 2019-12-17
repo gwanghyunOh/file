@@ -46,7 +46,6 @@ var MainAction = {
 		MainAction.SetTime(".pcIndex .Mslider .item.first", "on", "500");
 		MainAction.SetTime(".pcIndex .Mslider .slick-arrow", "on", "1800");
 		MainAction.SetTime(".Mslider", "open1", "500");
-		MainAction.SetTime(".Himg", "on", "300");
 	},
 
 	SetTime: function (obj, Class, Time) {
@@ -60,7 +59,8 @@ var MainAction = {
 		}, Time);
 	},
 	ScrollEvent: function () {
-		var Scrollflg = "N";
+		var Scrollflg  = "N";
+		var Scrollflg2  = "N";
 		$(window).on("scroll", function () {
 			var height = $(document).scrollTop();
 
@@ -156,10 +156,34 @@ var MainAction = {
 				if (!$(".snb").hasClass("on")) {
 					if (height > 300) {
 						$(".snb").addClass("on");
+
+						
 					}
 				} else {
 					if (height < 300) {
 						$(".snb").removeClass("on");
+					}
+				}
+
+				if(Scrollflg2 == "N"){
+					if (height > 150) {
+						MainAction.SetTime(".Himg", "set", "0");
+						MainAction.SetTime(".Himg", "on", "0");
+
+						setTimeout(function(){
+							Scrollflg2 = "Y";
+						},300);
+					}
+				}
+
+				if(Scrollflg2 == "Y"){
+					if (height < 150) {
+						MainAction.SetTimeRemove(".Himg", "on", "0");
+						MainAction.SetTimeRemove(".Himg", "set", "300");
+
+						setTimeout(function(){
+							Scrollflg2 = "N";
+						},300);
 					}
 				}
 			}
