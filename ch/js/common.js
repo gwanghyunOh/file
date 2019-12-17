@@ -36,6 +36,21 @@ var MainAction = {
 			MainAction.SetTime(".pcIndex .Mslider .slick-arrow", "on", "1200");
 			$('.Mslider .item').eq(currentSlide + 1).addClass("on");
 		});
+		
+		$('.pcIndex .card .subSlider .wrap').slick({
+			infinite: false,
+			arrows: true,
+			dots: false,
+			slidesToShow: 2,
+			slidesToScroll: 1,
+		}).on('afterChange', function (event, slick, currentSlide, nextSlide) {
+			console.log(currentSlide);
+			if(currentSlide > 0){
+				$(".pcIndex .card .subSlider .wrap .slick-arrow.slick-prev").addClass("on");
+			} else{
+				$(".pcIndex .card .subSlider .wrap .slick-arrow.slick-prev").removeClass("on");
+			}
+		});
 	},
 	FixSliderAdd: function () {
 		var CopyCont = $('.Mslider .item').eq(0).find('.imgWrap').find("img").attr("src");
@@ -46,6 +61,14 @@ var MainAction = {
 		MainAction.SetTime(".pcIndex .Mslider .item.first", "on", "500");
 		MainAction.SetTime(".pcIndex .Mslider .slick-arrow", "on", "1800");
 		MainAction.SetTime(".Mslider", "open1", "500");
+		MainAction.SetTime(".Himg", "set", "200");
+		
+		$(".pcIndex .card .card_cont .list2 div:nth-child(2) img").on("mouseenter", function () {
+			$(this).attr("src", "img/pc/card11_on.png")
+		});
+		$(".pcIndex .card .card_cont .list2 div:nth-child(2) img").on("mouseleave", function () {
+			$(this).attr("src", "img/pc/card11.png")
+		});
 	},
 
 	SetTime: function (obj, Class, Time) {
@@ -59,8 +82,7 @@ var MainAction = {
 		}, Time);
 	},
 	ScrollEvent: function () {
-		var Scrollflg  = "N";
-		var Scrollflg2  = "N";
+		var Scrollflg = "N";
 		$(window).on("scroll", function () {
 			var height = $(document).scrollTop();
 
@@ -152,37 +174,61 @@ var MainAction = {
 				}
 			}
 
-			if ($(".pcIndex .history").index() != "-1") {
+			if ($(".pcIndex .TabList").index() == "-1") {
 				if (!$(".snb").hasClass("on")) {
 					if (height > 300) {
 						$(".snb").addClass("on");
-
-						
 					}
 				} else {
 					if (height < 300) {
 						$(".snb").removeClass("on");
 					}
 				}
-
-				if(Scrollflg2 == "N"){
-					if (height > 150) {
-						MainAction.SetTime(".Himg", "set", "0");
-						MainAction.SetTime(".Himg", "on", "0");
+			}
+			
+			if ($(".card").index() != "-1") {
+				if (height > 100) {
+					$(".pcIndex .card .subSlider .wrap").addClass("on");
+					MainAction.SetTime(".pcIndex .card .subSlider .wrap .slick-arrow.slick-next", "on", "1000");
+				}
+				
+				if (height > 600) {
+					$(".pcIndex .card .card_cont h3").addClass("on");
+					MainAction.SetTime(".pcIndex .card .card_cont .g1", "on", "0");
+				}
+				
+				if (height > 900) {
+					$(".pcIndex .card .card_cont h3").addClass("on");
+					MainAction.SetTime(".pcIndex .card .card_cont .g2", "on", "0");
+				}
+			}
+			
+			if ($(".sub3").index() != "-1") {
+				if (height > 50) {
+					$(".pcIndex .sub3 .dtl").addClass("on");
+				}
+				if (height > 500) {
+					$(".pcIndex .sub3 .sub_cont").addClass("on");
+				}
+			}
+			
+			if ($(".history").index() != "-1") {
+				if(Scrollflg == "N"){
+					if (height > 250) {
+						$(".pcIndex .history .Himg").addClass("on");
 
 						setTimeout(function(){
-							Scrollflg2 = "Y";
+							Scrollflg = "Y";
 						},300);
 					}
 				}
 
-				if(Scrollflg2 == "Y"){
-					if (height < 150) {
-						MainAction.SetTimeRemove(".Himg", "on", "0");
-						MainAction.SetTimeRemove(".Himg", "set", "300");
+				if(Scrollflg == "Y"){
+					if (height < 250) {
+						$(".pcIndex .history .Himg").removeClass("on");
 
 						setTimeout(function(){
-							Scrollflg2 = "N";
+							Scrollflg = "N";
 						},300);
 					}
 				}
