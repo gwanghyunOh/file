@@ -15,6 +15,44 @@
 
 <body>
 	
+	<p>배열 값으로 다시 재 소트 시키기</p>
+
+	<script>
+
+	var test = 
+		[
+			{
+				name: "3번",
+				seq: 3
+			},
+			{
+				name: "7번",
+				seq: 7
+			},
+			{
+				name: "1번",
+				seq: 1
+			},
+			{
+				name: "4번",
+				seq: 4
+			}
+		]
+
+
+	console.log(test.sort(function (a, b) { 
+		return a.seq < b.seq ? -1 : a.seq > b.seq ? 1 : 0;  
+	}))
+
+	</script>
+
+	
+
+	<div id="data1">
+
+	</div>
+
+	<div id="data2"></div>
 </body>
 
 </html>
