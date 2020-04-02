@@ -42,10 +42,6 @@
 <script>
 $(function () {
 //layerpop 제어코드
-	$("#test1").on("click",function(e){
-		
-	});
-
 	$("#test2").on("click",function(e){
 		PB_Action.LayerPop_Closed("#pop01");
 	});
@@ -84,7 +80,7 @@ PB_Action = {
 		if (PopTypeYN == "M") {	
 			$(PopID).fadeIn(300).attr("data-poptype", PopTypeYN);
 			setTimeout(function(){
-				$(PopID).addClass("on")
+				$(PopID).addClass("on");
 			},50);	
 		} else if(PopTypeYN == "C") {
 			//팝업 센터정렬 (트랜스폼으로 했을경우 -.1px 오류로 흐려지는 문제가있어서 계산해서 추가함);
