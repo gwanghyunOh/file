@@ -14,7 +14,7 @@
 </head>
 
 <body>
-	<button type="button" onclick="PB_Action.LayerPop_Show('#pop01', 'C', this);">센터 팝업열기</button>
+	<button type="button" onclick="PB_Action.LayerPop_Show('#pop01', 'C', this, 'callbacktest', '1111');">센터 팝업열기</button>
 	<button type="button" onclick="PB_Action.LayerPop_Show('#pop02', 'M', this);">하단 팝업열기</button>
 	<div id="pop01" class="layerpop_wrap">
 		<div class="layercont">
@@ -43,13 +43,16 @@
 $(function () {
 //layerpop 제어코드
 	$("#test2").on("click",function(e){
-		PB_Action.LayerPop_Closed("#pop01");
+		PB_Action.LayerPop_Closed("#pop01", 'callbacktest', '2222');
 	});
 	$("#test3").on("click",function(e){
-		PB_Action.LayerPop_Closed("#pop02");
+		PB_Action.LayerPop_Closed("#pop02", 'callbacktest', '333');
 	});
 });
-
+//콜백 테스트
+function callbacktest(data){
+	console.log(data);
+}
 //화면 이벤트 제어
 PB_Action = {
 	//팝업 ID, 팝업 타입(M : 하단 모션팝업 / C : 센터터 레이어팝업) , this(접근성을 위함) ,콜백,콜백파람 , 스크롤방지 객가 section이 아닐경우
