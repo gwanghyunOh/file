@@ -24,6 +24,12 @@ button{margin:0;padding:0;border:none;background:none;cursor:pointer;display:inl
 .dim.on {visibility:visible; opacity:0.6; z-index:900;}
 
 
+/* 레이어팝업 */
+.layerpop_wrap{width: 100%; height: 100%; position: fixed; left: 0; top: 0; background-color: rgba(0,0,0,0.7); z-index: 9999; display: none;}
+.layerpop_wrap .layercont{width: 200px; height: 200px; background-color: #fff; position: absolute;}
+
+.layerpop_wrap.Bottom .layercont{width: 100%; height: 300px; bottom: -100%; transition: all 0.3s; -webkit-transition: all 0.3s;}
+.layerpop_wrap.Bottom.on .layercont{bottom:0;}
 
 
 

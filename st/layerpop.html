@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<title>레이어팝업 실행</title>
+	<script src="js/jquery-3.4.1.js"></script>
+	<script src="js/slick.js"></script>
+	<script src="js/common.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/common.css">
+	<link rel="stylesheet" type="text/css" href="css/slick.css">
+</head>
+
+<body>
+	<button type="button" onclick="PB_Action.LayerPop_Show('#pop01', 'C', this);">센터 팝업열기</button>
+	<button type="button" onclick="PB_Action.LayerPop_Show('#pop02', 'M', this);">하단 팝업열기</button>
+	<div id="pop01" class="layerpop_wrap">
+		<div class="layercont">
+			레이어팝업 컨텐츠
+			<a href="#">항목1</a>
+			<a href="#">항목1</a>
+			<a href="#">항목1</a>
+			<a href="#">항목1</a>
+			<button type="button" id="test2">팝업닫기</button>
+		</div>
+	</div>	
+
+	<div id="pop02" class="layerpop_wrap Bottom">
+		<div class="layercont">
+			레이어팝업 컨텐츠
+			<a href="#">항목1</a>
+			<a href="#">항목1</a>
+			<a href="#">항목1</a>
+			<a href="#">항목1</a>
+			<button type="button" id="test3">팝업닫기</button>
+		</div>
+	</div>	
+
+</body>
+<script>
+$(function () {
+//layerpop 제어코드
+	$("#test1").on("click",function(e){
+		
+	});
+
+	$("#test2").on("click",function(e){
+		PB_Action.LayerPop_Closed("#pop01");
+	});
+	$("#test3").on("click",function(e){
+		PB_Action.LayerPop_Closed("#pop02");
+	});
+});
+
+//화면 이벤트 제어
+PB_Action = {
+	//팝업 ID, 팝업 타입(M : 하단 모션팝업 / C : 센터터 레이어팝업) , this(접근성을 위함) ,콜백,콜백파람 , 스크롤방지 객가 section이 아닐경우
+	LayerPop_Show: function (PopID, PopType, ClickBtn, config_callbackfcn, config_Pram, Back_Fix_ID) {
+		//접근성 코드(팝업내로 포커스를 루프시키기 위함)
+		$(PopID).find("a, button, input").eq(0).attr("data-pop-focus", "first");
+		$(PopID).find("a, button, input").last().attr("data-pop-focus", "last");
+
+		//팝업종료시 클릭한 버튼으로 포커스 리턴을 하기 위한 id셋팅
+		var ClickBtnID = "";
+		if ($(ClickBtn).attr("id") != "" && $(ClickBtn).attr("id") != undefined) {
+			ClickBtnID = $(ClickBtn).attr("id");
+		} else {
+			//클릭한 버튼 ID값이 없을경우 임시 ID값 부여
+			ClickBtnID = "nullbtnID" + $("button").length;
+			$(ClickBtn).attr("id", ClickBtnID);
+		}
+		$(PopID).attr("tabindex","0").attr("data-focus-return", ClickBtnID);
+
+		//팝업타입 설정
+		var PopTypeYN = ""; // M = 하단 모션팝업, C = Center 센터 팝업
+		if (PopType == "" || PopType == undefined) {
+			PopTypeYN = "C";
+		} else {
+			PopTypeYN = PopType;
+		}
+
+		if (PopTypeYN == "M") {	
+			$(PopID).fadeIn(300).attr("data-poptype", PopTypeYN);
+			setTimeout(function(){
+				$(PopID).addClass("on")
+			},50);	
+		} else if(PopTypeYN == "C") {
+			//팝업 센터정렬 (트랜스폼으로 했을경우 -.1px 오류로 흐려지는 문제가있어서 계산해서 추가함);
+			var $target = $(PopID + " > div");
+			$target.css("top", "calc(50% - " + $target.height()/2 +"px");
+			$target.css("left", "calc(50% - " + $target.width()/2 +"px");
+			$(PopID).show().attr("data-poptype", PopTypeYN);
+		}
+
+		//모바일 App 버전
+		//팝업 실행후 팝업내부로 포커스를 이동 후 팝업 내 컨텐츠를 제외한 나머지 영역 aria-hidden == true 처리
+		//(보이스오버/보이스어시스트 사용시 팝업 외부로 벗어나는걸 방지)
+		//기본으로 true 처리가 되어있는 필드가 있을 수 있어 해당사항이 없는것만 별도처리, 
+		//삭제때도 기본항목을 제외한 항목만 삭제 
+		// setTimeout(function () {
+		// 	$('[data-pop-focus=first]').focus();
+		// 	$('body *').not('' + PopID + ', ' + PopID + ' *').each(function () {
+		// 		if ($(this).attr("aria-hidden") == undefined) {
+		// 			$(this).attr('aria', "hidden_on").attr("aria-hidden", "true");
+		// 		}
+		// 	});
+		// }, 1000);
+		//---------------------------------------------
+
+		//PC WEB 버전
+		$(PopID).focus();
+		//첫번째탭에서  shift + tab 경우 마지막버튼으로 (팝업내 포커스 루프)
+		$(PopID).find("[data-pop-focus=first]").on("keydown", function(e){
+			if(e.shiftKey == true && e.which == 9){
+				setTimeout(function(){
+					$(PopID).find("[data-pop-focus=last]").focus();
+				},0);	
+			}
+		});
+		
+		//마지막탭에서 tab 경우 첫번째 버튼 (팝업내 포커스 루프)
+		$(PopID).find("[data-pop-focus=last]").on("keydown", function(e){
+			if(e.shiftKey == false && e.which == 9){
+				$(PopID).focus();
+			}
+		});
+		//---------------------------------------------
+		
+		//팝업실행시 배경 스크롤을 막는다 (별도 지정이 없는경우 body)
+		if (Back_Fix_ID == "" || Back_Fix_ID == undefined) {
+			Back_Fix_ID = "body";
+		}
+		PB_Action.Back_Fix_Event(Back_Fix_ID);
+
+		//콜백
+		if (config_callbackfcn != undefined) {
+			eval(config_callbackfcn)(config_Pram);
+		}
+	},
+	LayerPop_Closed: function (PopID, config_callbackfcn, config_Pram, Back_Fix_ID) {
+		//팝업 타입별 종료하는 이벤트로직 수행
+		if ($(PopID).attr("data-poptype") == "M") {
+			$(PopID).removeClass("on")
+			setTimeout(function(){
+				$(PopID).fadeOut(300);
+			},100);
+		} else {
+			$(PopID).hide();
+		}
+		$("#" + $(PopID).attr("data-focus-return")).focus();
+
+		//접근성관련 코드를 삭제한다.
+		$("[aria=hidden_on]").removeAttr('aria').removeAttr('aria-hidden');
+		$('body *').removeAttr("data-pop-focus");
+		$('body *').removeAttr("data-focus-return");
+		
+		//배경 스크롤 원복
+		if (Back_Fix_ID == "" || Back_Fix_ID == undefined) {
+			Back_Fix_ID = "body";
+		}
+		PB_Action.Back_UnFix_Event(Back_Fix_ID);
+		
+		//콜백
+		if (config_callbackfcn != undefined) {
+			eval(config_callbackfcn)(config_Pram);
+		}
+	},
+
+	//팝업시 빽단 스크롤 중지
+	Back_Fix_Event: function (objID) {
+		$(objID).css('overflow-y', 'hidden');
+	},
+
+	//팝업시 빽단 스크롤 해지
+	Back_UnFix_Event: function (objID) {
+		if (objID == "section") {
+			$(objID).css('overflow-y', 'scroll');
+		}
+		else {
+			$(objID).css('overflow-y', 'visible');
+		}
+	},
+}
+</script>
+
+</html>
