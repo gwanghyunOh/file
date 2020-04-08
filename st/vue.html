@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<title>레이어팝업 실행</title>
+	<script src="js/jquery-3.4.1.js"></script>
+	<script src="js/slick.js"></script>
+	<script src="js/common.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/common.css">
+	<link rel="stylesheet" type="text/css" href="css/slick.css">
+	
+</head>
+
+<body>
+	<div id="app-7">
+		<ol>
+		  <todo-item
+			v-for="item in groceryList"
+			v-bind:todo="item"
+			v-bind:key="item.id"
+		  ></todo-item>
+		</ol>
+	  </div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+		Vue.component('todo-item', {
+		props: ['todo'],
+		template: '<li>{{ todo.text }}</li>'
+		})
+
+		var app7 = new Vue({
+		el: '#app-7',
+		data: {
+			groceryList: [
+			{ id: 0, text: 'Vegetables' },
+			{ id: 1, text: 'Cheese' },
+			{ id: 2, text: 'Whatever else humans are supposed to eat' }
+			]
+		}
+		})
+	</script>
+</body>
+</html>

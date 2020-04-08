@@ -41,7 +41,7 @@
 </body>
 <script>
 $(function () {
-//layerpop 제어코드
+	//layerpop 제어코드
 	$("#test2").on("click",function(e){
 		PB_Action.LayerPop_Closed("#pop01", 'callbacktest', '2222');
 	});
@@ -55,19 +55,19 @@ function callbacktest(data){
 }
 //화면 이벤트 제어
 PB_Action = {
-	//팝업 ID, 팝업 타입(M : 하단 모션팝업 / C : 센터터 레이어팝업) , this(접근성을 위함) ,콜백,콜백파람 , 스크롤방지 객가 section이 아닐경우
+	//팝업 ID, 팝업 타입(M : 하단 모션팝업 / C : 센터터 레이어팝업) , this(접근성을 위함) ,콜백,콜백파람 , 스크롤방지 객체가 body가 아닐경우
 	LayerPop_Show: function (PopID, PopType, ClickBtn, config_callbackfcn, config_Pram, Back_Fix_ID) {
 		//접근성 코드(팝업내로 포커스를 루프시키기 위함)
-		$(PopID).find("a, button, input").eq(0).attr("data-pop-focus", "first");
+		$(PopID).find("a, button, input").first().attr("data-pop-focus", "first");
 		$(PopID).find("a, button, input").last().attr("data-pop-focus", "last");
 
 		//팝업종료시 클릭한 버튼으로 포커스 리턴을 하기 위한 id셋팅
 		var ClickBtnID = "";
 		if ($(ClickBtn).attr("id") != "" && $(ClickBtn).attr("id") != undefined) {
 			ClickBtnID = $(ClickBtn).attr("id");
-		} else {
+		} else { 
 			//클릭한 버튼 ID값이 없을경우 임시 ID값 부여
-			ClickBtnID = "nullbtnID" + $("button").length;
+			ClickBtnID = "nullbtnID" + $(ClickBtn).index();
 			$(ClickBtn).attr("id", ClickBtnID);
 		}
 		$(PopID).attr("tabindex","0").attr("data-focus-return", ClickBtnID);
