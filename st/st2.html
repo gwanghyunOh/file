@@ -14,7 +14,25 @@
 </head>
 
 <body>
-	
+	<button id="test">123213123</button>
 </body>
-
+<script>
+	$(document).ready(function(){
+		ttt.add();
+	});
+	
+	var ttt = {
+		con : {
+			st : function(tt){
+				alert(tt);
+			}
+		},
+		ss : function(){
+			alert(11);
+		},
+		add : function(){
+			$("#test").off().on("click", function(e){ttt.con.st("ss")});
+		}
+	}
+</script>
 </html>
